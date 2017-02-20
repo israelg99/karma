@@ -1,0 +1,21 @@
+{
+    "name": "karma",
+    "version": "1.0.0",
+    "description": "A 2D revolutionary game.",
+    "author": "Israel Gilyadov <israelg99@gmail.com>",
+    "main": "src/main/main.js",
+    "scripts": {
+        "dev": "webpack",
+        "deploy": "webpack --config webpack.production.config.js",
+        "test": "standard"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "7.0.5",
+        "webpack": "^2.2.1",
+        "typings": "^2.1.0"
+    },
+    "dependencies": {
+        "phaser": "^2.6.2"
+    }
+}
