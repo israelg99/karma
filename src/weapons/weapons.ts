@@ -4,6 +4,7 @@ import { phaser } from '../main/main';
 import { Ak47 } from './ak47';
 import { Gun } from './gun';
 import { Elite } from './elite';
+import { preload_dict } from '../util/preload';
 
 export enum WeaponType {
     Melee = 4,
@@ -26,10 +27,6 @@ export class Weapons {
 
     public static preload(): void {
         Gun.preload()
-        for(let weapon in Weapons.weapons) {
-            if (Weapons.weapons.hasOwnProperty(weapon)) {
-                Weapons.weapons[weapon].preload()
-            }
-        }
+        preload_dict(Weapons.weapons)
     }
 }
