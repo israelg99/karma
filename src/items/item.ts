@@ -1,9 +1,10 @@
 import { phaser, items } from '../main/main';
 import { debug } from '../util/debug-util';
 import { Weapon } from '../weapons/weapon';
+import { Equippable } from './equippable';
 
 export class Item extends Phaser.Sprite {
-    private readonly item: Weapon
+    private readonly item: Equippable
 
     constructor(item: any, x: number, y: number, key: string = item.constructor.name.toLowerCase()) {
         console.log(key)
