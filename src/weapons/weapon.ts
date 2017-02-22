@@ -1,8 +1,13 @@
+import { Equippable } from './../items/equippable';
 import { phaser, pad1 } from '../main/main'
 import { Ak47 } from './ak47'
 import { WeaponType, Weapons } from './weapons';
+import { Player } from '../player/player';
+import { replace, drop, loot } from '../items/equippable';
 
-export abstract class Weapon extends Phaser.Sprite {
+export abstract class Weapon extends Phaser.Sprite implements Equippable {
+    public readonly dropRate: number = 0.5
+
     public readonly weaponType: WeaponType
     protected shootSFX: string
     protected shoot: Phaser.Sound
@@ -47,5 +52,27 @@ export abstract class Weapon extends Phaser.Sprite {
 
     public getHUD(): string {
         return ''
+    }
+
+    public replace(player: Player): void {
+        replace(this, player.weapon, player)
+    }
+    public drop(player: Player): void {
+        drop(this, player)
+    }
+    public loot(player: Player): void {
+        loot(this, player)
+    }
+    public equip(player: Player): void {
+        player.weapon = this
+        player.addChild(player.weapon)
+        player.weapon.track(player)
+        player.frame = player.weapon.weaponType as number
+    }
+    public unEquip(player: Player): Equippable {
+        player.removeChild(player.weapon)
+        let weapon: Weapon = player.weapon
+        player.weapon = undefined
+        return weapon
     }
 }
