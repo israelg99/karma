@@ -3,7 +3,7 @@ import { Equippable } from './equippable';
 import { Player } from './../player/player';
 
 // Many of these functions could be implmeneted in the player class (DROP, LOOT and partially REPLACE).
-// I choose to keep this design because I expect these functions to eventually become unique for individual objects..
+// I choose to keep this design because I expect these functions to eventually become unique for individual objects.
 // Almost all of these funcs could become static.
 
 // I'll be cautious around this piece of code, expect major refactor here.
