@@ -1,3 +1,5 @@
+import { Armors } from './../armor/armors';
+import { Equippable } from './../items/equippable';
 import { HUD } from './../main/main';
 import { Item } from './../items/item';
 import { phaser, cursors, pad1, items, wasd, pickup_key } from '../main/main';
@@ -6,6 +8,7 @@ import { Ak47 } from '../weapons/ak47';
 import { debug } from '../util/debug-util';
 import { PlayerBuilder } from './player-builder';
 import { WeaponType } from '../weapons/weapons';
+import { Armor } from '../armor/armor';
 
 export class Player extends Phaser.Sprite {
     public static readonly maxHealth: number = 100
@@ -13,14 +16,15 @@ export class Player extends Phaser.Sprite {
 
     private static readonly blood_frames: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
-    private weapon: Weapon
+    public weapon: Weapon
+    public armor: Armor
+
     private readonly isLocal: boolean
 
     private readonly bloodEmitter: Phaser.Particles.Arcade.Emitter
 
     private readonly HUD_health: Phaser.Text
     private readonly HUD_ammo: Phaser.Text
-    // private readonly HUD_magazine: Phaser.Text
 
     constructor(builder: PlayerBuilder) {
         // Sprite
@@ -33,10 +37,14 @@ export class Player extends Phaser.Sprite {
 
         // Player
         this.health = builder.Health
+        this.maxHealth = Player.maxHealth
         this.isLocal = builder.IsLocal
 
         // Weapon
-        this.setWeapon(builder.Weapon)
+        builder.Weapon.equip(this)
+
+        // Armor
+        this.armor = undefined
 
         // Blood
         this.bloodEmitter = phaser.add.emitter(0, 0, 15)
@@ -79,47 +87,28 @@ export class Player extends Phaser.Sprite {
     }
 
     private death(): void {
-        if(Math.random() > 0.5) {
-            this.drop()
+        for(let equip of this.equipment) {
+            equip.loot(this)
         }
+
         this.destroy(true)
         return
     }
 
-    private changeWeapon(weapon: Weapon): void {
-        if(this.weapon) {
-            this.drop()
-        }
-
-        this.setWeapon(weapon)
+    private get equipments(): Equippable[] {
+        return [this.weapon, this.armor]
     }
-
-    private setWeapon(weapon: Weapon): void {
-        this.weapon = weapon
-        this.addChild(this.weapon)
-        this.weapon.track(this)
-        this.frame = this.weapon.weaponType as number
+    private get equipment(): Equippable[] {
+        return this.equipments.filter((e) => e)
     }
-
-    private removeWeapon(): Weapon {
-        this.removeChild(this.weapon)
-        let weapon = this.weapon
-        this.weapon = undefined
-        return weapon
-    }
-
 
     private pickup(): void {
         let pickable_items: Item[] = []
         phaser.physics.arcade.overlap(this, items, (s: Player, i: Item) => pickable_items.push(i), null, this);
 
         if(pickable_items.length > 0) {
-            this.changeWeapon(pickable_items[0].pickup())
+            pickable_items[0].pickup().replace(this)
         }
-    }
-
-    private drop(): void {
-        Item.drop(this.removeWeapon(), this.body.x, this.body.y)
     }
 
     public update(): void {
