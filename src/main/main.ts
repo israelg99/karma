@@ -4,13 +4,14 @@
 
 import { Item } from './../items/item';
 import { Player } from '../player/player'
-import { Weapon } from '../weapons/weapon'
 import { Weapons } from '../weapons/weapons'
 import { load_debug, debug } from '../util/debug-util';
 import { PlayerBuilder } from '../player/player-builder';
 import { Ak47 } from '../weapons/ak47';
 import { M4A1 } from '../weapons/m4a1s';
 import { Elite } from '../weapons/elite';
+import { Plastic } from '../armor/plastic';
+import { Armors } from '../armor/armors';
 
 export let phaser: Phaser.Game = new Phaser.Game(1600, 800, Phaser.AUTO, '', )
 
@@ -35,11 +36,12 @@ function preload(): void {
 
     Weapons.preload()
     Player.preload()
+    Armors.preload()
 }
 
 function create(): void {
     // TEMP VOLUME FOR DEBUGGING
-    phaser.sound.volume = 0.5
+    phaser.sound.volume = 0.2
 
     // PHYSICS
     phaser.physics.startSystem(Phaser.Physics.ARCADE)
@@ -91,6 +93,7 @@ function create(): void {
     // ITEMS + POP
     items = phaser.add.group()
     items.add(new Item(new M4A1(), 100, 100))
+    items.add(new Item(new Plastic(), 200, 200))
 
     // PLAYERS + CAMERA + POP
     players = phaser.add.group()
