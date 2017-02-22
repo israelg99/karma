@@ -1,6 +1,7 @@
 Karma
 ======
-Nothing special here, just a hackaton.
+I work on this game for fun while my models are training/generating.
+Let's see how far can I go.
 
 ### How to play?
 Spray and pray to RNGESUS.
