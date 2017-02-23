@@ -1,7 +1,7 @@
 Karma
 ======
-I work on this game for fun while my models are training/generating.
-Let's see how far can I go.
+I only work on this game while my models are training/generating.
+Let's see how far can I go :)
 
 ### How to play?
 Spray and pray to RNGESUS.
