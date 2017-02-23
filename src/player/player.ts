@@ -214,7 +214,7 @@ export class Player extends Phaser.Sprite {
     }
 
     public damage(amount: number): Phaser.Sprite {
-        super.damage(amount)
+        super.damage(this.armor ? this.armor.mitigate(amount) : amount)
         this.bloodEmitter.start(true, 135, null, 20)
         return this
     }
