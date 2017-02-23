@@ -152,6 +152,12 @@ export class Player extends Phaser.Sprite {
     }
 
     private listen(): void {
+        this.listenMovement()
+        this.listenHUD()
+        this.weapon.listen()
+    }
+
+    private listenMovement(): void {
         // TODO - Add support for gamepad.
         this.rotation = phaser.physics.arcade.angleToPointer(this)
 
@@ -174,8 +180,10 @@ export class Player extends Phaser.Sprite {
         // if (diagonal) {
         //     this.body.velocity.divide(2, 2)
         // }
+    }
 
-        this.weapon.listen()
+    private listenHUD() {
+        this.extended_hud.visible = hud_key.isDown
     }
 
     private updateHUD() {
@@ -196,15 +204,10 @@ export class Player extends Phaser.Sprite {
         this.HUD_armor.y = this.HUD_armor.height + 16
     }
 
-    private renderHUD() {
-        this.extended_hud.visible = hud_key.isDown
-    }
-
     public render(): void {
         if(this.isLocal) {
             debug(this, 16)
             debug(this.weapon, 200)
-            this.renderHUD()
         }
 
         this.weapon.render()
