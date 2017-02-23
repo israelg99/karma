@@ -7,7 +7,7 @@ Let's see how far can I go :)
 Spray and pray to RNGESUS.
 
 ### Some high-level tasks.
-- [ ] Gear system for the player.
+- [X] Gear system for the player.
 - [ ] Weapon and gear slots system.
 - [X] Extended HUD.
 - [ ] Abstract components out of main(world to its own class, input to a config).
