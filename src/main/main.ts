@@ -19,6 +19,7 @@ export let cursors: Phaser.CursorKeys
 export let wasd: Phaser.CursorKeys
 export let pad1: Phaser.SinglePad
 export let pickup_key: Phaser.Key
+export let hud_key: Phaser.Key
 
 let local_player: Player
 export let players: Phaser.Group
@@ -56,6 +57,7 @@ function create(): void {
     };
     pad1 = phaser.input.gamepad.pad1
     pickup_key = phaser.input.keyboard.addKey(Phaser.Keyboard.E)
+    hud_key = phaser.input.keyboard.addKey(Phaser.Keyboard.I)
     phaser.input.gamepad.start()
 
     HUD = phaser.add.group()
@@ -92,8 +94,8 @@ function create(): void {
 
     // ITEMS + POP
     items = phaser.add.group()
-    items.add(new Item(new M4A1(), 100, 100))
-    items.add(new Item(new Plastic(), 200, 200))
+    items.add(new Item(new M4A1(), new Phaser.Point(100)))
+    items.add(new Item(new Plastic(), new Phaser.Point(200)))
 
     // PLAYERS + CAMERA + POP
     players = phaser.add.group()

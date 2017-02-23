@@ -1,8 +1,7 @@
 import { Armors } from './../armor/armors';
 import { Equippable } from './../items/equippable';
-import { HUD } from './../main/main';
 import { Item } from './../items/item';
-import { phaser, cursors, pad1, items, wasd, pickup_key } from '../main/main';
+import { phaser, cursors, pad1, items, wasd, pickup_key, HUD, hud_key } from '../main/main';
 import { Weapon } from '../weapons/weapon'
 import { Ak47 } from '../weapons/ak47';
 import { debug } from '../util/debug-util';
@@ -25,6 +24,10 @@ export class Player extends Phaser.Sprite {
 
     private readonly HUD_health: Phaser.Text
     private readonly HUD_ammo: Phaser.Text
+
+    private readonly extended_hud: Phaser.Group
+    private readonly HUD_armor: Phaser.Text
+    private readonly HUD_weapon: Phaser.Text
 
     constructor(builder: PlayerBuilder) {
         // Sprite
@@ -64,6 +67,9 @@ export class Player extends Phaser.Sprite {
             // Listen to pickup key (input).
             pickup_key.onDown.add(this.pickup, this)
 
+            // HUD
+            this.extended_hud = phaser.add.group()
+
             this.HUD_health = phaser.add.text(0, 0, String(this.health), undefined)
             this.HUD_health.fontSize = 32
             this.HUD_health.fill = '#922B21'
@@ -83,6 +89,28 @@ export class Player extends Phaser.Sprite {
             this.HUD_ammo.x = phaser.canvas.width - this.HUD_ammo.width - 16
             this.HUD_ammo.y = phaser.canvas.height - this.HUD_ammo.height - 16
             HUD.add(this.HUD_ammo)
+
+            this.HUD_weapon = phaser.add.text(0, 0, String(0), undefined)
+            this.HUD_weapon.fontSize = 32
+            this.HUD_weapon.fill = '#FFFFFF'
+            this.HUD_weapon.stroke = '#000000'
+            this.HUD_weapon.strokeThickness = 2
+            this.HUD_weapon.anchor.setTo(0.5)
+            this.HUD_weapon.x = this.HUD_weapon.width + 16
+            this.HUD_weapon.y = this.HUD_weapon.height + 16
+            this.extended_hud.add(this.HUD_weapon)
+
+            this.HUD_armor = phaser.add.text(0, 0, this.weapon.getHUD(), undefined)
+            this.HUD_armor.fontSize = 32
+            this.HUD_armor.fill = '#FFFFFF'
+            this.HUD_armor.stroke = '#000000'
+            this.HUD_armor.strokeThickness = 2
+            this.HUD_armor.anchor.setTo(0.5)
+            this.HUD_armor.x = phaser.canvas.width - this.HUD_armor.width - 16
+            this.HUD_armor.y = this.HUD_armor.height + 16
+            this.extended_hud.add(this.HUD_armor)
+
+            HUD.add(this.extended_hud)
         }
     }
 
@@ -158,12 +186,25 @@ export class Player extends Phaser.Sprite {
         this.HUD_ammo.text = this.weapon.getHUD()
         this.HUD_ammo.x = phaser.canvas.width - this.HUD_ammo.width - 16
         this.HUD_ammo.y = phaser.canvas.height - this.HUD_ammo.height - 16
+
+        this.HUD_weapon.text = this.weapon.getExtendedHUD()
+        this.HUD_weapon.x = this.HUD_weapon.width/2 + 16
+        this.HUD_weapon.y = this.HUD_weapon.height/2 + 16
+
+        this.HUD_armor.text = this.armor ? `Armor: ${this.armor.Armor}` : "You have no armor."
+        this.HUD_armor.x = phaser.canvas.width - this.HUD_armor.width - 16
+        this.HUD_armor.y = this.HUD_armor.height + 16
+    }
+
+    private renderHUD() {
+        this.extended_hud.visible = hud_key.isDown
     }
 
     public render(): void {
         if(this.isLocal) {
             debug(this, 16)
             debug(this.weapon, 200)
+            this.renderHUD()
         }
 
         this.weapon.render()

@@ -29,7 +29,7 @@ export function replace(target: Equippable, current: Equippable, player: Player)
 }
 
 export function drop(equip: Equippable, player: Player): void {
-    Item.drop(equip.unEquip(player), player.body.x, player.body.y)
+    Item.drop(equip.unEquip(player), player.position)
 }
 
 export function loot(equip: Equippable, player: Player): void {

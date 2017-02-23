@@ -90,6 +90,9 @@ export abstract class Gun extends Weapon {
     public getHUD(): string {
         return this.magazine + '/' + this.ammo
     }
+    public getExtendedHUD(): string {
+        return `Ammo: ${this.ammo}\nDistance: ${this.distance}\nSpeed: ${this.speed}\nRecoil: ${this.variance}\nFirerate: ${this.firerate}\nDamage: ${this.dmg}\nReload: ${this.reloadSpeed}`
+    }
 
     public static preload(): void {
         phaser.load.image('firearm_bullet', '../../assets/projectile/firearm_bullet_bright.png')

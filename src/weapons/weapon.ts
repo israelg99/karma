@@ -53,6 +53,9 @@ export abstract class Weapon extends Phaser.Sprite implements Equippable {
     public getHUD(): string {
         return ''
     }
+    public getExtendedHUD(): string {
+        return ''
+    }
 
     public replace(player: Player): void {
         replace(this, player.weapon, player)

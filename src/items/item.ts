@@ -6,9 +6,8 @@ import { Equippable } from './equippable';
 export class Item extends Phaser.Sprite {
     private readonly item: Equippable
 
-    constructor(item: any, x: number, y: number, key: string = item.constructor.name.toLowerCase()) {
-        console.log(key)
-        super(phaser, x, y, key + '_d')
+    constructor(item: any, pos: Phaser.Point, key: string = item.constructor.name.toLowerCase()) {
+        super(phaser, pos.x, pos.y, key + '_d')
         phaser.physics.enable(this, Phaser.Physics.ARCADE)
         this.anchor.setTo(0.25, -0.5)
         this.item = item
@@ -19,9 +18,7 @@ export class Item extends Phaser.Sprite {
         return this.item
     }
 
-    public static drop(sprite: any, x?: number, y?: number): void {
-        let tx: number = x ? x : sprite.x
-        let ty: number = y ? y : sprite.y
-        items.add(new Item(sprite, tx, ty))
+    public static drop(sprite: any, pos: Phaser.Point): void {
+        items.add(new Item(sprite, pos))
     }
 }
