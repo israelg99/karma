@@ -27,7 +27,7 @@ export abstract class Armor implements Equippable {
     }
 
     public mitigate(damage: number): number {
-        return Math.max(0, damage-this.mitigation(damage))
+        return Math.max(0, damage*this.mitigation(damage))
     }
 
     public replace(player: Player): void {
