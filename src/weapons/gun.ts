@@ -1,5 +1,5 @@
 import { M4A1 } from './m4a1s';
-import { players } from './../main/main';
+import { players, reload_key } from './../main/main';
 import { phaser, pad1 } from '../main/main'
 import { Weapon } from './weapon'
 import { Player } from '../player/player';
@@ -39,7 +39,7 @@ export abstract class Gun extends Weapon {
         this.gun.bulletAngleVariance = this.variance
         this.gun.fireRate = this.firerate
 
-        this.reload()
+        this.fillMag()
         this.isReloading = false
         this.gun.onFire.add(this.playShoot, this)
         this.gun.onFire.add(this.updateMag, this)
@@ -61,17 +61,28 @@ export abstract class Gun extends Weapon {
     }
 
     public fire(): void {
-        if(this.magazine > 0) {
-            this.gun.fire()
+        if(this.magazine <= 0) {
+            this.reload()
             return
         }
         if(!this.isReloading) {
-            this.isReloading = true
-            phaser.time.events.add(this.reloadSpeed, this.reload, this)
+            this.gun.fire()
         }
     }
 
-    private reload() {
+    private reload(): void {
+        if(!this.isReloading) {
+            this.isReloading = true
+            phaser.time.events.add(this.reloadSpeed, this.fillMag, this)
+        }
+    }
+
+    public listen(): void {
+        super.listen()
+        reload_key.onDown.add(this.reload, this)
+    }
+
+    private fillMag(): void {
         this.magazine = this.ammo
         this.isReloading = false
     }

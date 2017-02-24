@@ -33,8 +33,7 @@ export abstract class Weapon extends Phaser.Sprite implements Equippable {
     }
     public render(): void { }
 
-    // Must not include anything player-specific, such as input.
-    // The gun cannot trigger itself!
+    // Must not include anything local player specific here!
     public update(): void { }
 
     public listen(): void {

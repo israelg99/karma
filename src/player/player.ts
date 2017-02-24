@@ -1,3 +1,4 @@
+import { reload_key } from './../main/main';
 import { Armors } from './../armor/armors';
 import { Equippable } from './../items/equippable';
 import { Item } from './../items/item';
@@ -8,6 +9,7 @@ import { debug } from '../util/debug-util';
 import { PlayerBuilder } from './player-builder';
 import { WeaponType } from '../weapons/weapons';
 import { Armor } from '../armor/armor';
+import { Gun } from '../weapons/gun';
 
 export class Player extends Phaser.Sprite {
     public static readonly maxHealth: number = 100
