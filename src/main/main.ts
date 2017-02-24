@@ -20,6 +20,7 @@ export let wasd: Phaser.CursorKeys
 export let pad1: Phaser.SinglePad
 export let pickup_key: Phaser.Key
 export let hud_key: Phaser.Key
+export let reload_key: Phaser.Key
 
 let local_player: Player
 export let players: Phaser.Group
@@ -58,6 +59,7 @@ function create(): void {
     pad1 = phaser.input.gamepad.pad1
     pickup_key = phaser.input.keyboard.addKey(Phaser.Keyboard.E)
     hud_key = phaser.input.keyboard.addKey(Phaser.Keyboard.I)
+    reload_key = phaser.input.keyboard.addKey(Phaser.Keyboard.R)
     phaser.input.gamepad.start()
 
     HUD = phaser.add.group()
