@@ -77,8 +77,7 @@ export class Player extends Phaser.Sprite {
             this.HUD_health.fill = '#922B21'
             this.HUD_health.stroke = '#000000'
             this.HUD_health.strokeThickness = 2
-            this.HUD_health.anchor.setTo(0.5)
-            this.HUD_health.x = this.HUD_health.width + 16
+            this.HUD_health.x = 16
             this.HUD_health.y = phaser.canvas.height - this.HUD_health.height - 16
             HUD.add(this.HUD_health)
 
@@ -87,7 +86,6 @@ export class Player extends Phaser.Sprite {
             this.HUD_ammo.fill = '#1E8449'
             this.HUD_ammo.stroke = '#000000'
             this.HUD_ammo.strokeThickness = 2
-            this.HUD_ammo.anchor.setTo(0.5)
             this.HUD_ammo.x = phaser.canvas.width - this.HUD_ammo.width - 16
             this.HUD_ammo.y = phaser.canvas.height - this.HUD_ammo.height - 16
             HUD.add(this.HUD_ammo)
@@ -97,9 +95,8 @@ export class Player extends Phaser.Sprite {
             this.HUD_weapon.fill = '#FFFFFF'
             this.HUD_weapon.stroke = '#000000'
             this.HUD_weapon.strokeThickness = 2
-            this.HUD_weapon.anchor.setTo(0.5)
-            this.HUD_weapon.x = this.HUD_weapon.width + 16
-            this.HUD_weapon.y = this.HUD_weapon.height + 16
+            this.HUD_weapon.x = 16
+            this.HUD_weapon.y = 16
             this.extended_hud.add(this.HUD_weapon)
 
             this.HUD_armor = phaser.add.text(0, 0, this.weapon.getHUD(), undefined)
@@ -107,9 +104,8 @@ export class Player extends Phaser.Sprite {
             this.HUD_armor.fill = '#FFFFFF'
             this.HUD_armor.stroke = '#000000'
             this.HUD_armor.strokeThickness = 2
-            this.HUD_armor.anchor.setTo(0.5)
             this.HUD_armor.x = phaser.canvas.width - this.HUD_armor.width - 16
-            this.HUD_armor.y = this.HUD_armor.height + 16
+            this.HUD_armor.y = 16
             this.extended_hud.add(this.HUD_armor)
 
             HUD.add(this.extended_hud)
@@ -190,7 +186,7 @@ export class Player extends Phaser.Sprite {
 
     private updateHUD() {
         this.HUD_health.text = String(this.health)
-        this.HUD_health.x = this.HUD_health.width + 16
+        this.HUD_health.x = 16
         this.HUD_health.y = phaser.canvas.height - this.HUD_health.height - 16
 
         this.HUD_ammo.text = this.weapon.getHUD()
@@ -198,12 +194,12 @@ export class Player extends Phaser.Sprite {
         this.HUD_ammo.y = phaser.canvas.height - this.HUD_ammo.height - 16
 
         this.HUD_weapon.text = this.weapon.getExtendedHUD()
-        this.HUD_weapon.x = this.HUD_weapon.width/2 + 16
-        this.HUD_weapon.y = this.HUD_weapon.height/2 + 16
+        this.HUD_weapon.x = 16
+        this.HUD_weapon.y = 16
 
         this.HUD_armor.text = this.armor ? `Armor: ${this.armor.Armor}` : "You have no armor."
         this.HUD_armor.x = phaser.canvas.width - this.HUD_armor.width - 16
-        this.HUD_armor.y = this.HUD_armor.height + 16
+        this.HUD_armor.y = 16
     }
 
     public render(): void {
